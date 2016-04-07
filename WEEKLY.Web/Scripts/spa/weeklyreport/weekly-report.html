@@ -1,0 +1,676 @@
+﻿<div class="page-header">
+    <h1 class="title">Week {{selectedWeekData.WeekNo}}   ({{selectedWeekData.StartDate | date:"MMMM dd, yyyy"}} - {{selectedWeekData.EndDate | date:"MMMM dd, yyyy"}})</h1>
+    <ol class="breadcrumb">
+        <li>
+            <a ng-href="/dashboard">Dashboard</a>
+        </li>
+        <li class="active">Week {{selectedWeekData.WeekNo}}</li>
+    </ol>
+    <div class="right">
+        <div class="btn-group" role="group" aria-label="...">
+            <button class="btn btn-light" ng-click="saveReportDetails()">
+                <i class="fa fa-save"></i>
+                Save
+            </button>
+            <button class="btn btn-light" ng-click="viewPdfWeeklyReport()">
+                <i class="fa fa-file-pdf-o"></i>
+                View Report
+            </button>
+        </div>
+        <!--<div class="btn-group" dropdown>
+            <button type="button"
+                    class="btn btn-success dropdown-toggle"
+                    dropdown-toggle>
+                {{selectedReportMenuOption}}<span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a ng-click="setSelectedReportMenuOption('View Report')">
+                        <i class="fa fa-file-pdf-o"></i>
+                        View Report
+                    </a>
+                </li>
+            </ul>
+        </div>-->
+        <div class="btn-group" dropdown>
+            <button type="button"
+                    class="btn btn-light dropdown-toggle"
+                    dropdown-toggle>
+                {{selectedProject.Name}} <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="proj in projectsList">
+                    <a ng-click="projectFilterSelected(proj)">
+                        {{proj.Name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-group" dropdown>
+            <button type="button"
+                    class="btn btn-light dropdown-toggle"
+                    dropdown-toggle>
+                {{selectedWeekFilter.Year}} <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="yr in yearList">
+                    <a ng-click="yearFilterSelected(yr)">
+                        {{yr}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination">
+                <li ng-repeat="wk in weekNoList" ng-class="{'active': selectedWeekData.WeekNo == wk.WeekNo}">
+                    <a ng-click="weekFilterSelected(wk.WeekNo)">
+                        {{wk.WeekNo}}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-title">
+                Project: {{selectedProject.Name}}
+                <ul class="panel-tools">
+                    <li>
+                        <label> Include in Report </label>
+                        <checkbox class="btn-success"
+                            ng-model="currentReport.CurrentDetail.ShowInReport">
+                        </checkbox>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel-right">
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <tabset>
+                            <tab heading="Key Achievements">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr style="font-weight: bold">
+                                            <th style="width:5%">Week</th>
+                                            <th style="width:80%">Description</th>
+                                            <th style="width:5%">Percent Complete</th>
+                                            <th style="width:10%">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="ka in currentReport.CurrentDetail.KeyAchievements">
+                                            <td>
+                                                <span editable-select="ka.WeekNo" e-name="WeekNo" e-form="rowform" e-ng-options="wk.WeekNo as wk.WeekNo for wk in weekNoList">
+                                                    {{ showKeyAchievementWeekNo(ka) }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span editable-textarea="ka.Description" e-name="Description" e-rows="3" e-cols="75" e-maxlength="1000" e-form="rowform" e-required>
+                                                    {{ ka.Description || 'Description is required' }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span editable-number="ka.PercentComplete" e-name="PercentComplete" e-min="0" e-form="rowform" e-required>
+                                                    {{ ka.PercentComplete + '%' || 'PercentComplete is required' }}
+                                                </span>
+                                            </td>
+                                            <td style="white-space: nowrap">
+                                                <!-- form -->
+                                                <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == ka">
+                                                    <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-sm">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-warning btn-sm">
+                                                        <i class="fa fa-ban"></i>
+                                                    </button>
+                                                </form>
+                                                <div class="buttons" ng-show="!rowform.$visible">
+                                                    <button class="btn btn-success btn-sm" ng-click="rowform.$show()">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger btn-sm" ng-click="removeKeyAchievementWeekNo($index)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br />
+                                <button class="btn btn-default btn-sm" ng-click="addKeyAchievement()">
+                                    <i class="fa fa-plus"></i>
+                                    New Key Achievement
+                                </button>
+                            </tab>
+                            <tab heading="Risks">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr style="font-weight: bold">
+                                            <th style="width:5%">Week</th>
+                                            <th style="width:40%">Description</th>
+                                            <th style="width:40%">Effect</th>
+                                            <th style="width:5%">Percent Likelihood</th>
+                                            <th style="width:10%">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="rsk in currentReport.CurrentDetail.Risks">
+                                            <td>
+                                                <span editable-select="rsk.WeekNo" e-name="WeekNo" e-form="riskForm" e-ng-options="wk.WeekNo as wk.WeekNo for wk in weekNoList">
+                                                    {{ showRiskWeekNo(rsk) }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span editable-textarea="rsk.Description" e-name="Description" e-rows="3" e-cols="60" e-maxlength="1000" e-form="riskForm" e-required>
+                                                    {{ rsk.Description || 'Description is required' }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span editable-textarea="rsk.Effect" e-name="Effect" e-rows="3" e-cols="60" e-maxlength="1000" e-form="riskForm" e-required>
+                                                    {{ rsk.Effect || 'Effect is required' }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span editable-number="rsk.PercentLikelihood" e-name="PercentLikelihood" e-min="0" e-form="riskForm" e-required>
+                                                    {{ rsk.PercentLikelihood + '%' || 'PercentLikelihood is required' }}
+                                                </span>
+                                            </td>
+                                            <td style="white-space: nowrap">
+                                                <!-- form -->
+                                                <form editable-form name="riskForm" ng-show="riskForm.$visible" class="form-buttons form-inline" shown="inserted == rsk">
+                                                    <button type="submit" ng-disabled="riskForm.$waiting" class="btn btn-default btn-sm">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                    <button type="button" ng-disabled="riskForm.$waiting" ng-click="riskForm.$cancel()" class="btn btn-warning btn-sm">
+                                                        <i class="fa fa-ban"></i>
+                                                    </button>
+                                                </form>
+                                                <div class="buttons" ng-show="!riskForm.$visible">
+                                                    <button class="btn btn-success btn-sm" ng-click="riskForm.$show()">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger btn-sm" ng-click="removeRisk($index)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br />
+                                <button class="btn btn-default btn-sm" ng-click="addRisk()">
+                                    <i class="fa fa-plus"></i>
+                                    New Risk
+                                </button>
+                            </tab>
+                            <tab heading="Impediments">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr style="font-weight: bold">
+                                            <th style="width:5%">Week</th>
+                                            <th style="width:42.5%">Description</th>
+                                            <th style="width:42.5%">Effect</th>
+                                            <th style="width:10%">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="imp in currentReport.CurrentDetail.Impediments">
+                                            <td>
+                                                <span editable-select="imp.WeekNo" e-name="WeekNo" e-form="impedimentForm" e-ng-options="wk.WeekNo as wk.WeekNo for wk in weekNoList">
+                                                    {{ showImpedimentWeekNo(imp) }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span editable-textarea="imp.Description" e-name="Description" e-rows="3" e-cols="75" e-maxlength="1000" e-form="impedimentForm" e-required>
+                                                    {{ imp.Description || 'Description is required' }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span editable-textarea="imp.Effect" e-name="Effect" e-rows="3" e-cols="75" e-maxlength="1000" e-form="impedimentForm" e-required>
+                                                    {{ imp.Effect || 'Effect is required' }}
+                                                </span>
+                                            </td>
+                                            <td style="white-space: nowrap">
+                                                <!-- form -->
+                                                <form editable-form name="impedimentForm" ng-show="impedimentForm.$visible" class="form-buttons form-inline" shown="inserted == imp">
+                                                    <button type="submit" ng-disabled="impedimentForm.$waiting" class="btn btn-default btn-sm">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                    <button type="button" ng-disabled="impedimentForm.$waiting" ng-click="impedimentForm.$cancel()" class="btn btn-warning btn-sm">
+                                                        <i class="fa fa-ban"></i>
+                                                    </button>
+                                                </form>
+                                                <div class="buttons" ng-show="!impedimentForm.$visible">
+                                                    <button class="btn btn-success btn-sm" ng-click="impedimentForm.$show()">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger btn-sm" ng-click="removeImpediment($index)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br />
+                                <button class="btn btn-default btn-sm" ng-click="addImpediment()">
+                                    <i class="fa fa-plus"></i>
+                                    New Impediment
+                                </button>
+                            </tab>
+                            <tab heading="Planned Activities">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr style="font-weight: bold">
+                                            <th style="width:5%">Week</th>
+                                            <th style="width:85%">Description</th>
+                                            <th style="width:10%">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="pa in currentReport.CurrentDetail.PlannedActivities">
+                                            <td>
+                                                <span editable-select="pa.TargetWeekNo" e-name="TargetWeekNo" e-form="plannedActivitiesForm" e-ng-options="wk.TargetWeekNo as wk.TargetWeekNo for wk in weekNoList">
+                                                    {{ showPlannedActivitiesWeekNo(pa) }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span editable-textarea="pa.Description" e-name="Description" e-rows="3" e-cols="85" e-maxlength="1000" e-form="plannedActivitiesForm" e-required>
+                                                    {{ pa.Description || 'Description is required' }}
+                                                </span>
+                                            </td>
+                                            <td style="white-space: nowrap">
+                                                <!-- form -->
+                                                <form editable-form name="plannedActivitiesForm" ng-show="plannedActivitiesForm.$visible" class="form-buttons form-inline" shown="inserted == pa">
+                                                    <button type="submit" ng-disabled="plannedActivitiesForm.$waiting" class="btn btn-default btn-sm">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                    <button type="button" ng-disabled="plannedActivitiesForm.$waiting" ng-click="plannedActivitiesForm.$cancel()" class="btn btn-warning btn-sm">
+                                                        <i class="fa fa-ban"></i>
+                                                    </button>
+                                                </form>
+                                                <div class="buttons" ng-show="!plannedActivitiesForm.$visible">
+                                                    <button class="btn btn-success btn-sm" ng-click="plannedActivitiesForm.$show()">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger btn-sm" ng-click="removePlannedActivity($index)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br />
+                                <button class="btn btn-default btn-sm" ng-click="addPlannedActivity()">
+                                    <i class="fa fa-plus"></i>
+                                    New Planned Activity
+                                </button>
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        SysAid Filter
+                        <ul class="panel-tools">
+                            <li>
+                                <a class="icon expand-tool" ng-click="toggleServiceDeskFilter()">
+                                    <i class="fa fa-expand"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-body" ng-hide="hideServiceDeskFilter">
+                        <form id="sysaidfilterForm" name="sysaidfilterForm" class="form-inline" novalidate ng-submit="getSysAidTickets()">
+                            <div class="form-group">
+                                <label class="form-label" for="inputSysAidStartDate">Start Date</label>
+                                <input type="text" class="form-control"
+                                       datepicker-popup="{{sysAidDateFormat}}"
+                                       ng-model="sysAidStartDate"
+                                       is-open="sysAidStarDateOpened"
+                                       datepicker-options="dateOptions"
+                                       close-text="Close"
+                                       id="inputSysAidStartDate"
+                                       readonly
+                                       ng-click="sysAidStartDateOpen($event)">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="inputSysAidEndDate">End Date</label>
+                                <input type="text" class="form-control"
+                                       datepicker-popup="{{sysAidDateFormat}}"
+                                       ng-model="sysAidEndDate"
+                                       is-open="sysAidEndDateOpened"
+                                       datepicker-options="dateOptions"
+                                       close-text="Close"
+                                       id="inputSysAidEndDate"
+                                       readonly
+                                       ng-click="sysAidEndDateOpen($event)">
+                            </div>
+                            <button id="submitSysAidFilter" class="btn btn-info btn-sm" type="submit">
+                                <i class="fa fa-search"></i>
+                                GO
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        SysAid Tickets
+                        <ul class="panel-tools">
+                            <li>
+                                <a class="icon expand-tool" ng-click="toggleHideServiceDeskDetails()">
+                                    <i class="fa fa-expand"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-body" ng-hide="hideServiceDeskDetails">
+                        <tabset>
+                            <tab heading="Requests">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr style="font-weight: bold">
+                                            <th>ID</th>
+                                            <th>Title</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="request in sysAidRequests">
+                                            <td>{{request.id}}</td>
+                                            <td>{{request.title}}</td>
+                                            <td>
+                                                <!--<span data-ng-class="{'color6' : request.status_str == 'Closed', 'color7' : request.status_str == 'New', 'color9' : request.status_str == 'Awaiting User Response', 'color6' : request.status_str == 'Request Completed'}">{{request.status_str}}</span>-->
+                                                <span data-ng-class="serviceRequestStatusClass(request.status_str)">{{request.status_str}}</span>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success btn-sm" ng-click="showMoreServiceRequestDetails(request, 'Request')">
+                                                    <i class="fa fa-tasks"></i>
+                                                    More
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </tab>
+                            <tab heading="Incidents">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr style="font-weight: bold">
+                                            <th>ID</th>
+                                            <th>Title</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="request in sysAidIncidents">
+                                            <td>{{request.id}}</td>
+                                            <td>{{request.title}}</td>
+                                            <td>
+                                                <!--<span data-ng-class="{'color6' : request.status_str == 'Closed', 'color7' : request.status_str == 'New', 'color9' : request.status_str == 'Awaiting User Response', 'color6' : request.status_str == 'Request Completed'}">{{request.status_str}}</span>-->
+                                                <span data-ng-class="serviceRequestStatusClass(request.status_str)">{{request.status_str}}</span>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success btn-sm" ng-click="showMoreServiceRequestDetails(request, 'Incident')">
+                                                    <i class="fa fa-tasks"></i>
+                                                    More
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </tab>
+                            <tab heading="Project Tasks">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr style="font-weight: bold">
+                                            <th>ID</th>
+                                            <th>Title</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="task in sysAidProjectTasks">
+                                            <td>{{task.id}}</td>
+                                            <td>{{task.title}}</td>
+                                            <td>
+                                                <span data-ng-class="projectTaskCategoryClass(task.category_str)">{{task.category_str}}</span>
+                                            </td>
+                                            <td>
+                                                <span data-ng-class="projectTaskStatusClass(task.status_str)">{{task.status_str}}</span>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success btn-sm" ng-click="showMoreProjectTaskDetails(task)">
+                                                    <i class="fa fa-tasks"></i>
+                                                    More
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </tab>
+                            <tab heading="Problems">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr style="font-weight: bold">
+                                            <th>ID</th>
+                                            <th>Title</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="request in sysAidProblems">
+                                            <td>{{request.id}}</td>
+                                            <td>{{request.title}}</td>
+                                            <td>
+                                                <span data-ng-class="serviceRequestStatusClass(request.status_str)">{{request.status_str}}</span>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success btn-sm" ng-click="showMoreServiceRequestDetails(request, 'Problem')">
+                                                    <i class="fa fa-tasks"></i>
+                                                    More
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="projectTaskModal.html">
+    <div class="modal-header">
+        <button type="button" ng-click="ok()" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title">Task #{{task.id}}</h3>
+    </div>
+    <div class="modal-body">
+        <form id="projectTaskModalForm" name="projectTaskModalForm" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">ID:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{task.id}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Project Title:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{task.project_title}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Project Description:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{task.project_description}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Task Title:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{task.title}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Task Description:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{task.description}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Project Manager:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{task.project_manager}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Category:</label>
+                <div class="col-sm-10">
+                    <span data-ng-class="projectTaskCategoryClass(task.category_str)">{{task.category_str}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Status:</label>
+                <div class="col-sm-10">
+                    <span data-ng-class="projectTaskStatusClass(task.status_str)">{{task.status_str}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Progress:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{task.progress}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Estimation:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{task.estimation}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Start Time:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{task.start_time | date:'medium'}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">End Time:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{task.end_time | date:'medium'}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">URL:</label>
+                <div class="col-sm-10">
+                    <a ng-href="http://levsa01:8080/index.jsp#/ProjectList.jsp" blank-target>
+                        http://levsa01:8080/index.jsp#/ProjectList.jsp
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    </div>
+</script>
+<script type="text/ng-template" id="serviceRequestModal.html">
+    <div class="modal-header">
+        <button type="button" ng-click="ok()" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title">{{type}}# - {{request.id}}</h3>
+    </div>
+    <div class="modal-body">
+        <form id="serviceRequestModalForm" name="serviceRequestModalForm" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">ID:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{request.id}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Title:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{request.title}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Description:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{request.description}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Requester:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{request.request_user}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Status:</label>
+                <div class="col-sm-10">
+                    <span data-ng-class="serviceRequestStatusClass(request.status_str)">{{request.status_str}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Created:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{request.insert_time | date:'medium'}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Due:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{request.due_date | date:'medium'}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">Closed:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">{{request.close_time | date:'medium'}}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label form-label">URL:</label>
+                <div class="col-sm-10">
+                    <a ng-href="http://levsa01:8080/index.jsp#/SREdit.jsp?id={{request.id}}&fromId=List" blank-target>
+                        http://levsa01:8080/index.jsp#/SREdit.jsp?id={{request.id}}&fromId=List
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    </div>
+   
+</script>

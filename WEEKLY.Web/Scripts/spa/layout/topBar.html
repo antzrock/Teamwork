@@ -1,0 +1,77 @@
+﻿<div id="top" class="clearfix" ng-hide="hideTopBar">
+    <div class="applogo">
+        <a class="logo" href="#">teamwork</a>
+    </div>
+    <a class="sidebar-open-button " ng-click="toggleHideSideBar()">
+        <i class="fa fa-bars"></i>
+    </a>
+    <a class="sidebar-open-button-mobile" ng-click="toggleHideSideBar()">
+        <i class="fa fa-bars"></i>
+    </a>
+    <!--<form class="searchform">
+        <input id="searchbox" class="searchbox" type="text" placeholder="Search">
+        <span class="searchbutton">
+            <i class="fa fa-search"></i>
+        </span>
+    </form>-->
+    <ul class="top-right">
+        <li class="dropdown link" dropdown on-toggle="toggled(open)">
+            <a class="dropdown-toggle hdbutton" dropdown-toggle href="#">
+                Create New
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-list">
+                <li ng-show="userHasAppPermission('CREATE_GROUP')">
+                    <a ng-href="/group/register/0">
+                        <i class="fa falist fa-wechat"></i>
+                        Group
+                    </a>
+                </li>
+                <li ng-show="userHasAppPermission('CREATE_TEAM')">
+                    <a ng-href="/team/register/0">
+                        <i class="fa falist fa-slideshare"></i>
+                        Team
+                    </a>
+                </li>
+                <li>
+                    <a ng-href="/registerproject/0/0/0">
+                        <i class="fa falist fa-check-square"></i>
+                        Team Project
+                    </a>
+                </li>
+                <li>
+                    <a ng-href="/registerproject/0/0/1">
+                        <i class="fa falist fa-group"></i>
+                        Group Project
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="link">
+            <a class="notifications">Week {{weekData.WeekNo}}</a>
+        </li>
+        <li class="dropdown link" dropdown on-toggle="toggled(open)">
+            <a class="dropdown-toggle profilebox" id="user-profile-dropdown" dropdown-toggle href="#">
+                <img alt="img" ng-src="{{avatarPath}}">
+                <!--<ng-letter-avatar data={{nickname}} fontsize="18" fontWeight="600" avatarcustomborder="border:0.5px solid white"  height="30" width="30"></ng-letter-avatar>-->
+                <b>{{nickname}}</b>
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right" aria-labelledby="simple-dropdown">
+                <li class="dropdown-header" role="presentation">Profile</li>
+                <li>
+                    <a ng-href="/profilesettings">
+                        <i class="fa falist fa-gear"></i>
+                        Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="#" ng-click="logout()">
+                        <i class="fa falist fa-power-off"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

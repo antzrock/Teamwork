@@ -1,0 +1,109 @@
+﻿<div class="page-header">
+    <h1 class="title">User Maintenance</h1>
+    <ol class="breadcrumb">
+        <li>
+            <a ng-href="/dashboard">Dashboard</a>
+        </li>
+        <li class="active">User Maintenance</li>
+    </ol>
+    <div class="right">
+        
+    </div>
+</div>
+
+<div class="container-padding">
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-title">
+                    Users
+                    <span class="label label-danger">{{totalCount}}</span>
+                </div>
+                <div class="panel-body table-responsive">
+                    <div class="dataTables_wrapper">
+                        <div class="dataTables_length">
+                            <label>
+                                Show
+                                <select class="" name="page_size" ng-model="pageSize" ng-change="pageSizeChanged()">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                                entries
+                            </label>
+                        </div>
+                        <div class="dataTables_filter">
+                            <label>
+                                Search:
+                                <input class="" type="search" placeholder="" ng-model="fieldFilter" ng-keypress="filterTextChanged()">
+                            </label>
+                        </div>
+                        <table class="table display dataTable table-hover  table-striped">
+                            <thead>
+                                <tr>
+                                    <td width="5%">ID</td>
+                                    <td width="5%"></td>
+                                    <td width="25%">Nickname</td>
+                                    <td width="25%">Fullname</td>
+                                    <td width="25%">Email</td>
+                                    <td width="5%">Status</td>
+                                    <td width="10%">Actions</td>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th rowspan="1" colspan="1">ID</th>
+                                    <th rowspan="1" colspan="1"></th>
+                                    <th rowspan="1" colspan="1">Nickname</th>
+                                    <th rowspan="1" colspan="1">Fullname</th>
+                                    <th rowspan="1" colspan="1">Email</th>
+                                    <th rowspan="1" colspan="1">Status</th>
+                                    <th rowspan="1" colspan="1">Actions</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr ng-repeat="user in users">
+                                    <td>{{user.UserID}}</td>
+                                    <td>
+                                        <img class="img" alt="img" width="35" height="35" style="border-radius: 999px;" src="{{user.AvatarPicPath}}">
+                                    </td>
+                                    <td>
+                                        {{user.Nickname}}
+                                    </td>
+                                    <td>{{user.Fullname}}</td>
+                                    <td>
+                                        <a href="mailto:{{user.Email}}">{{user.Email}}</a>  
+                                    </td>
+                                    <td ng-class="{'danger': user.Status.Name == 'Inactive', 'success': user.Status.Name == 'Active'}">{{user.Status.Name}}</td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm" ng-click="activateUser(user.UserID)" ng-show="user.Status.Name == 'Inactive'">
+                                            <i class="fa fa-unlock"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" ng-click="deactivateUser(user.UserID)" ng-show="user.Status.Name == 'Active'">
+                                            <i class="fa fa-lock"></i>
+                                        </button>
+                                        <button class="btn btn-default btn-sm" ng-click="changeUserPassword(user.UserID)">
+                                            <i class="fa fa-key"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{rangeStart}} to {{rangeEnd}} of {{totalCount}} entries</div>
+
+                        <div class="dataTables_paginate paging_simple_numbers">
+                            <a ng-class="{'paginate_button': true, 'previous': true, 'disabled': page == 0}" aria-controls="example0" data-dt-idx="0" tabindex="0" ng-click="previous()">Previous</a>
+                            <span>
+                                <a ng-repeat="n in range()" ng-class="{'paginate_button' : true, 'current' : n == page}" data-dt-idx="{{n+1}}" ng-click="search(n)">{{n+1}}</a>
+                            </span>
+                            <a ng-class="{'paginate_button': true, 'next': true, 'disabled': page == pagesCount - 1}" aria-controls="example0" data-dt-idx="5" tabindex="0" ng-click="next()">Next</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

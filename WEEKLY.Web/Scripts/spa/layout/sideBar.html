@@ -1,0 +1,124 @@
+﻿<div class="sidebar clearfix" data-ng-hide="hideSideBar">
+    <ul class="sidebar-panel nav">
+        <li class="sidetitle">Main</li>
+        <li>
+            <a ng-class="{'active' : isDashboardActive, '' : !isDashboardActive}"  ng-href="/dashboard">
+                <span class="icon color5">
+                    <i class="fa fa-home"></i>
+                </span>
+                Dashboard
+            </a>
+        </li>
+        <li>
+            <a ng-class="{'active' : isWeeklyReportActive, '' : !isWeeklyReportActive}" ng-href="/weeklyreport" ng-show="teamProjects.length > 0 || groupProjects.length > 0">
+                <span class="icon color5">
+                    <i class="fa fa-bar-chart"></i>
+                </span>
+                Weekly Report
+            </a>
+        </li>
+    </ul>
+    <ul class="sidebar-panel nav">
+        <li class="sidetitle color9">
+            Groups
+        </li>
+        <li>
+            <a ng-class="{'active' : doShowMyGroups, '' : !doShowMyGroups}" ng-click="toggleShowMyGroups()">
+                <span class="icon color7">
+                    <i class="fa fa-wechat"></i>
+                </span>
+                My Groups
+                <span class="caret"></span>
+            </a>
+            <ul ng-style="{'display': doShowMyGroups?'block':'none'}">
+                <li ng-repeat="group in userGroups">
+                    <a ng-href="/group/{{group.GroupID}}">{{group.Name}}</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a ng-class="{'active' : doShowMyGroupProjects, '' : !doShowMyGroupProjects}" ng-click="toggleShowMyGroupProjects()">
+                <span class="icon color7">
+                    <i class="fa fa-trello"></i>
+                </span>
+                My Group Projects
+                <span class="caret"></span>
+            </a>
+            <ul ng-style="{'display': doShowMyGroupProjects?'block':'none'}">
+                <li ng-repeat="project in groupProjects">
+                    <a ng-href="/project/{{project.ProjectID}}">{{project.Code}}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="sidebar-panel nav">
+        <li class="sidetitle color9">
+            Teams
+        </li>
+        <li>
+            <a ng-class="{'active' : doShowMyTeams, '' : !doShowMyTeams}" ng-click="toggleShowMyTeams()">
+                <span class="icon color7">
+                    <i class="fa fa-slideshare"></i>
+                </span>
+                My Teams
+                <span class="caret"></span>
+            </a>
+            <ul ng-style="{'display': doShowMyTeams?'block':'none'}">
+                <li ng-repeat="team in userTeams">
+                    <a ng-href="/team/{{team.TeamID}}">{{team.Name}}</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a ng-class="{'active' : doShowMyTeamProjects, '' : !doShowMyTeamProjects}" ng-click="toggleDoShowMyTeamProjects()">
+                <span class="icon color7">
+                    <i class="fa fa-trello"></i>
+                </span>
+                My Team Projects
+                <span class="caret"></span>
+            </a>
+            <ul ng-style="{'display': doShowMyTeamProjects?'block':'none'}">
+                <li ng-repeat="project in teamProjects">
+                    <a ng-href="/project/{{project.ProjectID}}">{{project.Code}}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="sidebar-panel nav" ng-show="isUserAdmin">
+        <li class="sidetitle">
+            Maintenance
+        </li>
+        <li>
+            <a ng-class="{'active' : isGroupMaintenanceActive, '' : !isGroupMaintenanceActive}" ng-href="/groups">
+                <span class="icon color5">
+                    <i class="fa fa-gears"></i>
+                </span>
+                Group Maintenance
+            </a>
+        </li>
+        <li>
+            <a ng-class="{'active' : isRoleMaintenanceActive, '' : !isRoleMaintenanceActive}" ng-href="/roles">
+                <span class="icon color5">
+                    <i class="fa fa-gears"></i>
+                </span>
+                Role Maintenance
+            </a>
+        </li>
+        <li>
+            <a ng-class="{'active' : isTeamMaintenanceActive, '' : !isTeamMaintenanceActive}" ng-href="/teams">
+                <span class="icon color5">
+                    <i class="fa fa-gears"></i>
+                </span>
+                Team Maintenance
+            </a>
+        </li>
+        <li>
+            <a ng-class="{'active' : isUserMaintenanceActive, '' : !isUserMaintenanceActive}" ng-href="/users">
+                <span class="icon color5">
+                    <i class="fa fa-gears"></i>
+                </span>
+                User Maintenance
+            </a>
+        </li>
+    </ul>
+</div>

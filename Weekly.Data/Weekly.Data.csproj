@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{78C27548-6E67-484F-9E2C-B042AAABDC29}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Weekly.Data</RootNamespace>
+    <AssemblyName>Weekly.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configurations\BacklogItemConfiguration.cs" />
+    <Compile Include="Configurations\BacklogItemPriorityConfiguration.cs" />
+    <Compile Include="Configurations\BacklogItemStatusConfiguration.cs" />
+    <Compile Include="Configurations\EntityBaseConfiguration.cs" />
+    <Compile Include="Configurations\GroupConfiguration.cs" />
+    <Compile Include="Configurations\GroupMemberConfiguration.cs" />
+    <Compile Include="Configurations\GroupRoleConfiguration.cs" />
+    <Compile Include="Configurations\GroupStatusConfiguration.cs" />
+    <Compile Include="Configurations\ImpedimentConfiguration.cs" />
+    <Compile Include="Configurations\KeyAchievementConfiguration.cs" />
+    <Compile Include="Configurations\MemberStatusConfiguration.cs" />
+    <Compile Include="Configurations\PermissionConfiguration.cs" />
+    <Compile Include="Configurations\PlannedActivityConfiguration.cs" />
+    <Compile Include="Configurations\ProductBacklogConfiguration.cs" />
+    <Compile Include="Configurations\ProjectCategoryConfiguration.cs" />
+    <Compile Include="Configurations\ProjectConfiguration.cs" />
+    <Compile Include="Configurations\ProjectScheduleActivityStatusConfiguration.cs" />
+    <Compile Include="Configurations\ProjectScheduleConfiguration.cs" />
+    <Compile Include="Configurations\ProjectScheduleStatusConfiguration.cs" />
+    <Compile Include="Configurations\ProjectStatusConfiguration.cs" />
+    <Compile Include="Configurations\RiskConfiguration.cs" />
+    <Compile Include="Configurations\RoleConfiguration.cs" />
+    <Compile Include="Configurations\ScrumRoleConfiguration.cs" />
+    <Compile Include="Configurations\ScrumTeamMemberConfiguration.cs" />
+    <Compile Include="Configurations\TaskConfiguration.cs" />
+    <Compile Include="Configurations\TaskStatusConfiguration.cs" />
+    <Compile Include="Configurations\TeamConfigurations.cs" />
+    <Compile Include="Configurations\TeamMemberConfiguration.cs" />
+    <Compile Include="Configurations\TeamRoleConfiguration.cs" />
+    <Compile Include="Configurations\TeamStatusConfiguration.cs" />
+    <Compile Include="Configurations\UserConfiguration.cs" />
+    <Compile Include="Configurations\UserRoleConfiguration.cs" />
+    <Compile Include="Configurations\UserStatusConfiguration.cs" />
+    <Compile Include="Configurations\WeekConfiguration.cs" />
+    <Compile Include="Configurations\WeekReportDetailConfiguration.cs" />
+    <Compile Include="Configurations\WeekReportHeaderConfiguration.cs" />
+    <Compile Include="Extensions\ProjectExtensions.cs" />
+    <Compile Include="Extensions\UserExtensions.cs" />
+    <Compile Include="Infrastructure\DbFactory.cs" />
+    <Compile Include="Infrastructure\Disposable.cs" />
+    <Compile Include="Infrastructure\IDbFactory.cs" />
+    <Compile Include="Infrastructure\IUnitOfWork.cs" />
+    <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="Migrations\201510010609556_initial.cs" />
+    <Compile Include="Migrations\201510010609556_initial.Designer.cs">
+      <DependentUpon>201510010609556_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositiories\EntityBaseRepository.cs" />
+    <Compile Include="Repositiories\IEntityBaseRepository.cs" />
+    <Compile Include="WeeklyContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201510010609556_initial.resx">
+      <DependentUpon>201510010609556_initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Weekly.Entities\Weekly.Entities.csproj">
+      <Project>{080ad5ab-f514-4e87-bce9-f9600b5aae8b}</Project>
+      <Name>Weekly.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

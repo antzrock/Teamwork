@@ -1,0 +1,233 @@
+﻿<div class="page-header">
+    <h1 class="title">Role Maintenance</h1>
+    <ol class="breadcrumb">
+        <li>
+            <a ng-href="/dashboard">Dashboard</a>
+        </li>
+        <li class="active">Role Maintenance</li>
+    </ol>
+    <div class="right">
+
+    </div>
+</div>
+
+<div class="container-padding">
+    <div class="row">
+        <div class="col-md-12">
+            <tabset>
+                <tab heading="Application">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr style="font-weight: bold">
+                                <th style="width:30%">Rolename</th>
+                                <th style="width:60%">Default Permissions</th>
+                                <th style="width:10%">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="role in applicationRoles">
+                                <td>
+                                    <span editable-text="role.Name" e-name="Name" e-form="appRolesRowForm" e-required>
+                                        {{ role.Name || 'Rolename is required' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span editable-checklist="role.Permissions" e-name="Permissions"  e-form="appRolesRowForm"  onbeforesave="checkApplicationRolePermissions($data)"  e-ng-options="p.PermissionID as p.Name for p in permissions" e-required>
+                                        {{ showApplicationRolePermission(role) }}
+                                    </span>
+                                </td>
+                                <td style="white-space: nowrap">
+                                    <!-- form -->
+                                    <form editable-form name="appRolesRowForm" ng-show="appRolesRowForm.$visible" class="form-buttons form-inline" shown="inserted == role">
+                                        <button type="submit" ng-disabled="appRolesRowForm.$waiting" class="btn btn-default btn-sm">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                        <button type="button" ng-disabled="appRolesRowForm.$waiting" ng-click="appRolesRowForm.$cancel()" class="btn btn-warning btn-sm">
+                                            <i class="fa fa-ban"></i>
+                                        </button>
+                                    </form>
+                                    <div class="buttons" ng-show="!appRolesRowForm.$visible">
+                                        <button class="btn btn-success btn-sm" ng-click="appRolesRowForm.$show()" ng-show="!role.isSystemGenerated">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" ng-click="removeApplicationRole($index)" ng-show="!role.isSystemGenerated">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <button class="btn btn-success btn-sm" ng-click="addApplicationRole()">
+                        <i class="fa fa-plus"></i>
+                        New Application Role
+                    </button>
+                    <button class="btn btn-default btn-sm" ng-click="saveApplicationRoleChanges()">
+                        <i class="fa fa-save"></i>
+                        Save Changes
+                    </button>
+                </tab>
+                <tab heading="Group">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr style="font-weight: bold">
+                                <th style="width:30%">Rolename</th>
+                                <th style="width:60%">Default Permissions</th>
+                                <th style="width:10%">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="role in groupRoles">
+                                <td>
+                                    <span editable-text="role.Name" e-name="Name" e-form="groupRolesRowForm" e-required e-ng-readonly="role.isSystemGenerated">
+                                        {{ role.Name || 'Rolename is required' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span editable-checklist="role.Permissions" e-name="Permissions" e-form="groupRolesRowForm" onbeforesave="checkGroupRolePermissions($data)" e-ng-options="p.PermissionID as p.Name for p in permissions" e-required>
+                                        {{ showGroupRolePermission(role) }}
+                                    </span>
+                                </td>
+                                <td style="white-space: nowrap">
+                                    <!-- form -->
+                                    <form editable-form name="groupRolesRowForm" ng-show="groupRolesRowForm.$visible" class="form-buttons form-inline" shown="inserted == role">
+                                        <button type="submit" ng-disabled="groupRolesRowForm.$waiting" class="btn btn-default btn-sm">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                        <button type="button" ng-disabled="groupRolesRowForm.$waiting" ng-click="groupRolesRowForm.$cancel()" class="btn btn-warning btn-sm">
+                                            <i class="fa fa-ban"></i>
+                                        </button>
+                                    </form>
+                                    <div class="buttons" ng-show="!groupRolesRowForm.$visible">
+                                        <button class="btn btn-success btn-sm" ng-click="groupRolesRowForm.$show()">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" ng-click="removeGroupRole($index)" ng-show="!role.isSystemGenerated">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <button class="btn btn-success btn-sm" ng-click="addGroupRole()">
+                        <i class="fa fa-plus"></i>
+                        New Group Role
+                    </button>
+                    <button class="btn btn-default btn-sm" ng-click="saveGroupRoleChanges()">
+                        <i class="fa fa-save"></i>
+                        Save Changes
+                    </button>
+                </tab>
+                <tab heading="Team">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr style="font-weight: bold">
+                                <th style="width:30%">Rolename</th>
+                                <th style="width:60%">Default Permissions</th>
+                                <th style="width:10%">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="role in teamRoles">
+                                <td>
+                                    <span editable-text="role.Name" e-name="Name" e-form="teamRolesRowForm" e-required e-ng-readonly="role.isSystemGenerated">
+                                        {{ role.Name || 'Rolename is required' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span editable-checklist="role.Permissions" e-name="Permissions" e-form="teamRolesRowForm" onbeforesave="checkTeamRolePermissions($data)" e-ng-options="p.PermissionID as p.Name for p in permissions" e-required>
+                                        {{ showTeamRolePermission(role) }}
+                                    </span>
+                                </td>
+                                <td style="white-space: nowrap">
+                                    <!-- form -->
+                                    <form editable-form name="teamRolesRowForm" ng-show="teamRolesRowForm.$visible" class="form-buttons form-inline" shown="inserted == role">
+                                        <button type="submit" ng-disabled="teamRolesRowForm.$waiting" class="btn btn-default btn-sm">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                        <button type="button" ng-disabled="teamRolesRowForm.$waiting" ng-click="teamRolesRowForm.$cancel()" class="btn btn-warning btn-sm">
+                                            <i class="fa fa-ban"></i>
+                                        </button>
+                                    </form>
+                                    <div class="buttons" ng-show="!teamRolesRowForm.$visible">
+                                        <button class="btn btn-success btn-sm" ng-click="teamRolesRowForm.$show()">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" ng-click="removeTeamRole($index)" ng-show="!role.isSystemGenerated">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <button class="btn btn-success btn-sm" ng-click="addTeamRole()">
+                        <i class="fa fa-plus"></i>
+                        New Team Role
+                    </button>
+                    <button class="btn btn-default btn-sm" ng-click="saveTeamRoleChanges()">
+                        <i class="fa fa-save"></i>
+                        Save Changes
+                    </button>
+                </tab>
+                <tab heading="Project">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr style="font-weight: bold">
+                                <th style="width:30%">Rolename</th>
+                                <th style="width:60%">Default Permissions</th>
+                                <th style="width:10%">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="role in projectRoles">
+                                <td>
+                                    <span editable-text="role.Name" e-name="Name" e-form="projectRolesRowForm" e-required e-ng-readonly="role.isSystemGenerated">
+                                        {{ role.Name || 'Rolename is required' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span editable-checklist="role.Permissions" e-name="Permissions" e-form="projectRolesRowForm" onbeforesave="checkProjectRolePermissions($data)" e-ng-options="p.PermissionID as p.Name for p in permissions" e-required>
+                                        {{ showProjectRolePermission(role) }}
+                                    </span>
+                                </td>
+                                <td style="white-space: nowrap">
+                                    <!-- form -->
+                                    <form editable-form name="projectRolesRowForm" ng-show="projectRolesRowForm.$visible" class="form-buttons form-inline" shown="inserted == role">
+                                        <button type="submit" ng-disabled="projectRolesRowForm.$waiting" class="btn btn-default btn-sm">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                        <button type="button" ng-disabled="projectRolesRowForm.$waiting" ng-click="projectRolesRowForm.$cancel()" class="btn btn-warning btn-sm">
+                                            <i class="fa fa-ban"></i>
+                                        </button>
+                                    </form>
+                                    <div class="buttons" ng-show="!projectRolesRowForm.$visible">
+                                        <button class="btn btn-success btn-sm" ng-click="projectRolesRowForm.$show()">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" ng-click="removeProjectRole($index)" ng-show="!role.isSystemGenerated">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <button class="btn btn-success btn-sm" ng-click="addProjectRole()">
+                        <i class="fa fa-plus"></i>
+                        New Project Role
+                    </button>
+                    <button class="btn btn-default btn-sm" ng-click="saveProjectRoleChanges()">
+                        <i class="fa fa-save"></i>
+                        Save Changes
+                    </button>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+</div>

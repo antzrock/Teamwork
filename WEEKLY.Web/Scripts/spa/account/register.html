@@ -1,0 +1,131 @@
+﻿<div class="login-form">
+    <form name="userRegistrationForm"novalidate angular-validator angular-validator-submit="register()">
+        <div class="top">
+            <img class="icon" src="../../../Content/images/teamwork.png" alt="icon">
+            <h1 class="color1">Register</h1>
+        </div>
+        <div class="form-area">
+            <div class="group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                <input id="inputUsername" 
+                       name="inputUsername" 
+                       class="form-control" 
+                       type="text" 
+                       placeholder="Username" 
+                       ng-model="user.Username"
+                       validate-on="dirty" 
+                       required 
+                       required-message="'Username is required'">
+
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                <input id="inputNickname"
+                       name="inputNickname"
+                       class="form-control"
+                       type="text"
+                       placeholder="Nickname"
+                       ng-model="user.Nickname"
+                       validate-on="dirty"
+                       required
+                       required-message="'Nickname is required'">
+
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                <input id="inputEmail" 
+                       name="inputEmail" 
+                       class="form-control" 
+                       type="email" 
+                       placeholder="E-mail" 
+                       ng-model="user.Email" 
+                       validate-on="dirty"
+                       ng-pattern="/^[A-Za-z0-9._%+-]+@pasar.com.ph$/"
+                       invalid-message="'You must enter a valid company email of the form xxxxx@pasar.com.ph'" 
+                       required 
+                       required-message="'Email is required'">
+
+                <i class="fa fa-envelope-o"></i>
+            </div>
+
+            <div class="group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                <input id="inputGroup"
+                       name="inputGroup"
+                       class="form-control"
+                       type="text"
+                       ng-model="user.Group"
+                       typeahead="group as group.Name for group in groups | filter:$viewValue"
+                       typeahead-editable="false"
+                       typeahead-on-select="onGroupSelect($item, $model, $label)"
+                       placeholder="Enter Group name"
+                       validate-on="blur"
+                       required
+                       required-message="'Group is required!'">
+
+                <i class="fa fa-group"></i>
+            </div>
+
+            <div class="group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                <input id="inputTeam"
+                       name="inputTeam"
+                       class="form-control"
+                       type="text"
+                       ng-model="user.Team"
+                       typeahead="team as team.Name for team in teams | filter:$viewValue"
+                       typeahead-editable="false"
+                       placeholder="Enter Team name"
+                       validate-on="blur"
+                       required
+                       required-message="'Team is required!'">
+
+                <i class="fa fa-group"></i>
+            </div>
+
+            <div class="group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                <input name="Password" 
+                       class="form-control" 
+                       type="password" 
+                       placeholder="Password" 
+                       data-ng-model="user.Password" 
+                       validate-on="dirty"
+                       ng-pattern="/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[~`!@#$%^&*]).{8,20})/"
+                       invalid-message="'Password must be: <br> 1. At least 8 characters <br> 2. Must contain at least one digit from 0-9 <br> 3. Must contain at least one lowercase character <br> 4. Must contain at least one uppercase character <br> 5. Must contain at least one special symbol in the list ~`!@#$%^&*'" 
+                       required 
+                       required-message="'Password is required'">
+
+                <i class="fa fa-key"></i>
+            </div>
+
+            <div class="group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                <input name="confirmPassword"
+                       class="form-control"
+                       type="password"
+                       placeholder="Confirm Password"
+                       data-ng-model="user.confirmPassword"
+                       validator = "user.Password === user.confirmPassword"
+                       validate-on="dirty"
+                       invalid-message="'Passwords do not match!'"
+                       required
+                       required-message="'Confirmation Password is required'">
+
+                <i class="fa fa-key"></i>
+            </div>
+
+            <button class="btn btn-default btn-block" type="submit">REGISTER NOW</button>
+
+            </div>
+     </form>
+    <div class="footer-links row">
+        <div class="col-xs-6">
+            <a ng-href="/">
+                <i class="fa fa-sign-in"></i>
+                Login
+            </a>
+        </div>
+        <div class="col-xs-6 text-right">
+            <a ng-href="/forgotpassword">
+                <i class="fa fa-lock"></i>
+                Forgot password
+            </a>
+        </div>
+    </div>
+</div>

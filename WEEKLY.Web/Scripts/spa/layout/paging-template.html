@@ -1,0 +1,7 @@
+﻿<div class="dataTables_paginate paging_simple_numbers">
+    <a ng-class="{'paginate_button': true, 'previous': true, 'disabled': page == 0}" aria-controls="example0" data-dt-idx="0" tabindex="0" ng-click="search(page-1)">Previous</a>
+    <span>
+        <a ng-repeat="n in range()" ng-class="{'paginate_button' : true, 'current' : n == page}" data-dt-idx="{{n+1}}" ng-click="search(n)">{{n+1}}</a>
+    </span>
+    <a ng-class="{'paginate_button': true, 'next': true, 'disabled': page == pagesCount - 1}" aria-controls="example0" data-dt-idx="5" tabindex="0" ng-click="search(parseInt(page) + 1)">Next</a>
+</div>

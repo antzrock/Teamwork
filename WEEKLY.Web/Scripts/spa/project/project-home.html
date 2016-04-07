@@ -1,0 +1,41 @@
+﻿<div class="page-header">
+    <h1 class="title">{{project.Name}}</h1>
+    <ol class="breadcrumb">
+        <li>
+            <a ng-href="/dashboard">Dashboard</a>
+        </li>
+        <li class="active">Project</li>
+    </ol>
+    <div class="right">
+        <div class="btn-group" role="group" aria-label="...">
+            <button class="btn btn-light" type="button">
+                <i class="fa fa-list"></i>
+                Product Backlog
+            </button>
+            <button class="btn btn-light" ng-click="editGroupProject(project.ProjectID, project.MainProjectID, isGroupProject)" ng-show="checkUserHasPermission()">
+                <i class="fa fa-gears"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container-padding">
+    <div class="row">
+        <!--<div class="col-md-9">
+
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-dark panel-widget">
+                <div class="panel-title"> Teammates </div>
+                <div class="panel-body">
+                    <ul class="basic-list image-list">
+                        <li ng-repeat="member in project.TeamMembers">
+                            <img class="img" src="{{member.AvatarPicUrl}}" alt="img" />
+                            <b>{{member.Fullname}}</b>
+                            <span class="desc">{{member.JobTitle}} / {{member.MainRole}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>-->
+    </div>
+</div>

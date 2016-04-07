@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html ng-app="weekly">
+<head>
+    <meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" />
+    <title>Teamwork</title>
+    <link href="content/css/root.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link href="~/Content/images/teamwork.ico" rel="shortcut icon">
+    <base href="/">
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body ng-class="{'body_regular' : isUserLoggedIn, 'body_login' : !isUserLoggedIn}" ng-controller="rootCtrl">
+    <top-bar></top-bar>
+    <side-bar></side-bar>
+    <div data-ng-class="{'content' : isUserLoggedIn, 'content_not_auth' : !isUserLoggedIn}" ng-style="{true: {marginLeft: '0px'}, false: {}}[hideSideBar]">
+        <div data-ng-view="">
+
+        </div>
+        <div class="row footer  ng-hide"  ng-show="isUserLoggedIn">
+            <div class="col-md-6 text-left">
+                Copyright © 2016
+                <a href="#" target="_blank">PASAR</a>
+                All rights reserved.
+            </div>
+            <div class="col-md-6 text-right">
+                Design and Developed by
+                <a href="#" target="_blank">IT Applications Support</a>
+            </div>
+        </div>
+    </div>
+    <toaster-container toaster-options="{'position-class': 'toast-bottom-right'}"></toaster-container>
+
+    @Scripts.Render("~/bundles/vendors")
+    @Scripts.Render("~/bundles/spa")
+
+</body>
+</html>

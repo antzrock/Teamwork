@@ -1,0 +1,392 @@
+﻿<div class="page-header">
+    <h1 class="title">{{isNewProject ? isTeamProject? 'New Team Project':'New Group Project' : project.Name}}</h1>
+    <ol class="breadcrumb">
+        <li>
+            <a ng-href="/dashboard">Dashboard</a>
+        </li>
+        <li class="active">Project</li>
+    </ol>
+    <div class="right">
+        <div class="btn-group" role="group" aria-label="...">
+            <button class="btn btn-light" onclick="document.getElementById('submitProject').click()">
+                <i class="fa fa-save"></i>
+            </button>
+            <button class="btn btn-light" ng-href="/dashboard">
+                <i class="fa fa-close"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container-padding">
+    <div class="row">
+        <div class="col-md-12">
+            <tabset>
+                <tab heading="Profile">
+
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="panel panel-default">
+                                <div class="panel-title">
+                                    Profile
+                                </div>
+                                <div class="panel-body" style="display: block;">
+                                    <form id="projectForm" name="projectForm" class="form-horizontal" novalidate angular-validator angular-validator-submit="projectForm.$valid && registerProject()">
+                                        <div class="form-group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                                            <label class="col-sm-2 control-label form-label" for="inputName">Name</label>
+                                            <div class="col-sm-10">
+                                                <input id="inputName"
+                                                       name="inputName"
+                                                       class="form-control"
+                                                       type="text"
+                                                       placeholder="Name"
+                                                       ng-model="project.Name"
+                                                       validate-on="dirty"
+                                                       required
+                                                       required-message="'Project name is required'">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                                            <label class="col-sm-2 control-label form-label" for="inputCode">Code</label>
+                                            <div class="col-sm-10">
+                                                <input id="inputCode"
+                                                       name="inputCode"
+                                                       class="form-control"
+                                                       type="text"
+                                                       placeholder="Code"
+                                                       ng-model="project.Code"
+                                                       validate-on="dirty"
+                                                       required
+                                                       required-message="'Project code is required'">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                                            <label class="col-sm-2 control-label form-label" for="inputGroup">Group</label>
+                                            <div class="col-sm-10">
+                                                <!--<!--<input id="inputGroup"
+                        name="inputGroup"
+                        class="form-control"
+                        type="text"
+                        placeholder="Enter Group name"
+                        ng-model="project.Group"
+                        typeahead="group as group.Name for group in groups | filter:$viewValue"
+                        typeahead-editable="false"
+                        typeahead-on-select="onGroupSelect($item, $model, $label)"
+                        validate-on="blur"
+                        required
+                        required-message="'Group is required'">-->
+                                                <div class="btn-group" dropdown>
+                                                    <button type="button"
+                                                            class="btn btn-white dropdown-toggle"
+                                                            dropdown-toggle>
+                                                        {{selectedGroup.Name}} <span class="caret"></span>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li ng-repeat="group in groups">
+                                                            <a ng-click="onGroupSelect2(group)">
+                                                                {{group.Name}}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <!--<p>{{project.Group.Name}}</p>-->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }' ng-if="isTeamProject === true">
+                                            <label class="col-sm-2 control-label form-label" for="inputTeam">Team</label>
+                                            <div class="col-sm-10">
+                                                <!--<input id="inputTeam"
+                        name="inputTeam"
+                        class="form-control"
+                        type="text"
+                        placeholder="Enter Team name"
+                        ng-model="project.Team"
+                        typeahead="team as team.Name for team in teams | filter:$viewValue"
+                        typeahead-editable="false"
+                        validate-on="blur"
+                        required
+                        required-message="'Team is required'">-->
+                                                <div class="btn-group" dropdown>
+                                                    <button type="button"
+                                                            class="btn btn-white dropdown-toggle"
+                                                            dropdown-toggle>
+                                                        {{selectedTeam.Name}} <span class="caret"></span>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li ng-repeat="team in teams">
+                                                            <a ng-click="onTeamSelected(team)">
+                                                                {{team.Name}}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <!--<p>{{project.Team.Name}}</p>-->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                                            <label class="col-sm-2 control-label form-label" for="inputCategory">Category</label>
+                                            <div class="col-sm-10">
+                                                <div class="btn-group" dropdown>
+                                                    <button type="button"
+                                                            class="btn btn-white dropdown-toggle"
+                                                            dropdown-toggle>
+                                                        {{selectedCategory.Name}} <span class="caret"></span>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li ng-repeat="category in projectCategories">
+                                                            <a ng-click="onProjectCategorySelect(category)">
+                                                                {{category.Name}}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <!--<p>{{project.Category.Name}}</p>-->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                                            <label class="col-sm-2 control-label form-label" for="inputExecutiveSummary">Executive Summary</label>
+                                            <div class="col-sm-10">
+                                                <textarea id="inputExecutiveSummary"
+                                                          name="inputExecutiveSummary"
+                                                          class="form-control"
+                                                          rows="5"
+                                                          placeholder="Executive Summary"
+                                                          ng-model="project.ExecutiveSummary"
+                                                          validate-on="dirty"
+                                                          required
+                                                          required-message="'Executive summary is required'"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                                            <label class="col-sm-2 control-label form-label" for="inputLogoPath">Logo</label>
+                                            <div class="col-sm-10" flow-name="LogoFlow.flow" flow-init="{singleFile: true, target: '/api/files/uploads/project'}"
+                                                 flow-files-submitted="$flow.upload()"
+                                                 flow-file-success="logopicUploaded( $file, $message, $flow )">
+
+                                                <div class="thumbnail" ng-show="!$flow.files.length">
+                                                    <img ng-src={{displayLogo}}>
+                                                </div>
+                                                <div class="thumbnail ng-hide" ng-show="$flow.files.length">
+                                                    <img flow-img="$flow.files[0]">
+                                                </div>
+                                                <div>
+                                                    <span class="btn btn-default btn-sm" flow-btn="" ng-show="!$flow.files.length">
+                                                        Select image
+                                                        <input type="file" style="visibility: hidden; position: absolute;">
+                                                    </span>
+                                                    <span class="btn btn-info btn-sm ng-hide" flow-btn="" ng-show="$flow.files.length">
+                                                        Change
+                                                        <input type="file" style="visibility: hidden; position: absolute;">
+                                                    </span>
+                                                    <span class="btn btn-danger btn-sm ng-hide" ng-click="$flow.cancel()" ng-show="$flow.files.length"> Remove </span>
+                                                </div>
+                                                <p> Only PNG,GIF,JPG,JEPG files allowed. </p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" show-errors='{ showSuccess: true, skipFormGroupCheck: true }'>
+                                            <label class="col-sm-2 control-label form-label" for="inputStatus">Status</label>
+                                            <div class="col-sm-10">
+                                                <div class="btn-group" dropdown>
+                                                    <button type="button"
+                                                            class="btn btn-white dropdown-toggle"
+                                                            dropdown-toggle>
+                                                        {{selectedProjectStatus.Name}} <span class="caret"></span>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li ng-repeat="state in projectStates">
+                                                            <a ng-click="onProjectStatusSelected(state)">
+                                                                {{state.Name}}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <!--<p>{{project.Status.Name}}</p>-->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button id="submitProject" class="btn btn-default btn-sm" type="submit" ng-hide="true">
+                                            <i class="fa fa-save"></i>
+                                            Save
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab heading="Membership">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="panel panel-default">
+                                <div class="panel-title">
+                                    Members
+                                </div>
+                                <div class="panel-body" style="display: block;">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr style="font-weight: bold">
+                                                <th style="width:21.25%">Fullname</th>
+                                                <th style="width:21.25%">Role</th>
+                                                <th style="width:21.25%">Status</th>
+                                                <th style="width:15%">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="member in project.TeamMembers">
+                                                <td>
+                                                    <span editable-select="member.Fullname" e-name="Fullname" e-form="rowform" e-ng-options="a.Fullname as a.Fullname for a in users">
+                                                        {{ showUser(member) }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span editable-checklist="member.Roles" e-form="rowform" onbeforesave="checkRoles($data)" e-ng-options="r.ScrumRoleID as r.Rolename for r in roles" e-required>
+                                                        {{ showRole(member) }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span editable-select="member.Status" e-name="Status" e-form="rowform" e-ng-options="a.Status as a.Status for a in memberStates">
+                                                        {{ showMemberStatus(member) }}
+                                                    </span>
+                                                </td>
+                                                <td style="white-space: nowrap">
+                                                    <!-- form -->
+                                                    <form editable-form name="rowform" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == member">
+                                                        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-default btn-sm">
+                                                            <i class="fa fa-check"></i>
+                                                            Done
+                                                        </button>
+                                                        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-warning btn-sm">
+                                                            <i class="fa fa-ban"></i>
+                                                            Cancel
+                                                        </button>
+                                                    </form>
+                                                    <div class="buttons" ng-show="!rowform.$visible">
+                                                        <button class="btn btn-success btn-sm" ng-click="rowform.$show()">
+                                                            <i class="fa fa-pencil"></i>
+                                                            Edit
+                                                        </button>
+                                                        <button class="btn btn-danger btn-sm" ng-click="removeUser($index)">
+                                                            <i class="fa fa-trash"></i>
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                    <button class="btn btn-default btn-sm" ng-click="addUser()">
+                                        <i class="fa fa-plus"></i>
+                                        New Member
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab heading="Schedule">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="panel panel-default">
+                                <div class="panel-title">
+                                    Schedule
+                                </div>
+                                <div class="panel-body" style="display: block;">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr style="font-weight: bold">
+                                                <th style="width:20%">Activity</th>
+                                                <th style="width:10.83333333333333%">Activity State</th>
+                                                <th style="width:10.83333333333333%">Planned Start</th>
+                                                <th style="width:10.83333333333333%">Planned End</th>
+                                                <th style="width:10.83333333333333%">Actual Start</th>
+                                                <th style="width:10.83333333333333%">Actual End</th>
+                                                <th style="width:10.83333333333333%">State</th>
+                                                <th style="width:15%">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="activity in project.Activities">
+                                                <td>
+                                                    <span editable-text="activity.Activity" e-name="Activity" e-form="rowform2" e-required>
+                                                        {{ activity.Activity || 'Activity is required' }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span editable-select="activity.ActivityStatus" e-name="ActivityStatus" e-form="rowform2" e-ng-options="a.ActivityStatus as a.ActivityStatus for a in activityStates">
+                                                        {{ showActivityState(activity) }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a href="#" editable-bsdate="activity.PlannedStartDate" e-name="PlannedStartDate" onshow="openPicker()" onhide="closePicker()" e-is-open="picker.opened" e-datepicker-popup="MMMM-dd-yyyy" e-required>
+                                                        {{ (activity.PlannedStartDate | date:"MMM dd, yyyy") || 'Planned start date is required' }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="#" editable-bsdate="activity.PlannedEndDate" e-name="PlannedEndDate" onshow="openPicker()" onhide="closePicker()" e-is-open="picker.opened" e-datepicker-popup="MMMM-dd-yyyy" e-required>
+                                                        {{ (activity.PlannedEndDate | date:"MMM dd, yyyy") || 'Planned end date is required' }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="#" editable-bsdate="activity.ActualStartDate" e-name="ActualStartDate" onshow="openPicker()" onhide="closePicker()" e-is-open="picker.opened" e-datepicker-popup="MMMM-dd-yyyy">
+                                                        {{ (activity.ActualStartDate | date:"MMM dd, yyyy") }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="#" editable-bsdate="activity.ActualEndDate" e-name="ActualEndDate" onshow="openPicker()" onhide="closePicker()" e-is-open="picker.opened" e-datepicker-popup="MMMM-dd-yyyy">
+                                                        {{ (activity.ActualEndDate | date:"MMM dd, yyyy") }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <span editable-select="activity.Status" e-name="Status" e-form="rowform2" e-ng-options="a.Status as a.Status for a in scheduleStates">
+                                                        {{ showProjectScheduleState(activity) }}
+                                                    </span>
+                                                </td>
+                                                <td style="white-space: nowrap">
+                                                    <!-- form -->
+                                                    <form editable-form name="rowform2" ng-show="rowform2.$visible" class="form-buttons form-inline" shown="inserted == activity">
+                                                        <button type="submit" ng-disabled="rowform2.$waiting" class="btn btn-default btn-sm">
+                                                            <i class="fa fa-check"></i>
+                                                            Done
+                                                        </button>
+                                                        <button type="button" ng-disabled="rowform2.$waiting" ng-click="rowform2.$cancel()" class="btn btn-warning btn-sm">
+                                                            <i class="fa fa-ban"></i>
+                                                            Cancel
+                                                        </button>
+                                                    </form>
+                                                    <div class="buttons" ng-show="!rowform2.$visible">
+                                                        <button class="btn btn-success btn-sm" ng-click="rowform2.$show()">
+                                                            <i class="fa fa-pencil"></i>
+                                                            Edit
+                                                        </button>
+                                                        <button class="btn btn-danger btn-sm" ng-click="removeActivity($index)">
+                                                            <i class="fa fa-trash"></i>
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                    <button class="btn btn-default btn-sm" ng-click="addActivity()">
+                                        <i class="fa fa-plus"></i>
+                                        New Activity
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+</div>

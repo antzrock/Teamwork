@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weekly.Entities", "Weekly.Entities\Weekly.Entities.csproj", "{080AD5AB-F514-4E87-BCE9-F9600B5AAE8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weekly.Data", "Weekly.Data\Weekly.Data.csproj", "{78C27548-6E67-484F-9E2C-B042AAABDC29}"
+	ProjectSection(ProjectDependencies) = postProject
+		{080AD5AB-F514-4E87-BCE9-F9600B5AAE8B} = {080AD5AB-F514-4E87-BCE9-F9600B5AAE8B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weekly.Services", "Weekly.Services\Weekly.Services.csproj", "{B47B12DF-FBE4-43ED-8F25-0D507CDEE952}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEEKLY.Web", "WEEKLY.Web\WEEKLY.Web.csproj", "{1EC62440-692E-499D-A799-183858609F0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEEKLY.Console", "WEEKLY.Console\WEEKLY.Console.csproj", "{CF657C24-AF06-483C-BB10-046DAFA7D244}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SysAid.Data", "SysAid.Data\SysAid.Data.csproj", "{85196582-CC97-4D96-9990-A5ABFE5184E0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{080AD5AB-F514-4E87-BCE9-F9600B5AAE8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{080AD5AB-F514-4E87-BCE9-F9600B5AAE8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{080AD5AB-F514-4E87-BCE9-F9600B5AAE8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{080AD5AB-F514-4E87-BCE9-F9600B5AAE8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78C27548-6E67-484F-9E2C-B042AAABDC29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78C27548-6E67-484F-9E2C-B042AAABDC29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78C27548-6E67-484F-9E2C-B042AAABDC29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78C27548-6E67-484F-9E2C-B042AAABDC29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B47B12DF-FBE4-43ED-8F25-0D507CDEE952}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B47B12DF-FBE4-43ED-8F25-0D507CDEE952}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B47B12DF-FBE4-43ED-8F25-0D507CDEE952}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B47B12DF-FBE4-43ED-8F25-0D507CDEE952}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EC62440-692E-499D-A799-183858609F0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EC62440-692E-499D-A799-183858609F0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EC62440-692E-499D-A799-183858609F0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EC62440-692E-499D-A799-183858609F0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF657C24-AF06-483C-BB10-046DAFA7D244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF657C24-AF06-483C-BB10-046DAFA7D244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF657C24-AF06-483C-BB10-046DAFA7D244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF657C24-AF06-483C-BB10-046DAFA7D244}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85196582-CC97-4D96-9990-A5ABFE5184E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85196582-CC97-4D96-9990-A5ABFE5184E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85196582-CC97-4D96-9990-A5ABFE5184E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85196582-CC97-4D96-9990-A5ABFE5184E0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://levtf01:8080/tfs/pasarinhousecollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Weekly.Entities\\Weekly.Entities.csproj
+		SccProjectName1 = Weekly.Entities
+		SccLocalPath1 = Weekly.Entities
+		SccProjectUniqueName2 = Weekly.Data\\Weekly.Data.csproj
+		SccProjectName2 = Weekly.Data
+		SccLocalPath2 = Weekly.Data
+		SccProjectUniqueName3 = Weekly.Services\\Weekly.Services.csproj
+		SccProjectName3 = Weekly.Services
+		SccLocalPath3 = Weekly.Services
+		SccProjectUniqueName4 = WEEKLY.Web\\WEEKLY.Web.csproj
+		SccProjectName4 = WEEKLY.Web
+		SccLocalPath4 = WEEKLY.Web
+		SccProjectUniqueName5 = WEEKLY.Console\\WEEKLY.Console.csproj
+		SccProjectName5 = WEEKLY.Console
+		SccLocalPath5 = WEEKLY.Console
+		SccProjectUniqueName6 = SysAid.Data\\SysAid.Data.csproj
+		SccProjectName6 = SysAid.Data
+		SccLocalPath6 = SysAid.Data
+	EndGlobalSection
+EndGlobal

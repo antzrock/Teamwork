@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{85196582-CC97-4D96-9990-A5ABFE5184E0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SysAid.Data</RootNamespace>
+    <AssemblyName>SysAid.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Infrastructure\ProjectTask.cs" />
+    <Compile Include="Infrastructure\ServiceRequest.cs" />
+    <Compile Include="Infrastructure\ServiceRequestEqualityComparer.cs" />
+    <Compile Include="Model\account.cs" />
+    <Compile Include="Model\agreement.cs" />
+    <Compile Include="Model\asset2ci.cs" />
+    <Compile Include="Model\asset_catalog.cs" />
+    <Compile Include="Model\asset_catalog_files.cs" />
+    <Compile Include="Model\asset_catalog_history.cs" />
+    <Compile Include="Model\asset_catalog_links.cs" />
+    <Compile Include="Model\asset_data_day_data.cs" />
+    <Compile Include="Model\asset_data_month_data.cs" />
+    <Compile Include="Model\asset_data_week_data.cs" />
+    <Compile Include="Model\asset_data_year_data.cs" />
+    <Compile Include="Model\asset_notif_events.cs" />
+    <Compile Include="Model\asset_offline_log.cs" />
+    <Compile Include="Model\asset_types.cs" />
+    <Compile Include="Model\audit_log.cs" />
+    <Compile Include="Model\audit_log_lines.cs" />
+    <Compile Include="Model\automatic_texts.cs" />
+    <Compile Include="Model\chat_active_sessions.cs" />
+    <Compile Include="Model\chat_closed_sessions.cs" />
+    <Compile Include="Model\chat_queue.cs" />
+    <Compile Include="Model\chat_queue_messages.cs" />
+    <Compile Include="Model\ci_attributes.cs" />
+    <Compile Include="Model\ci_files.cs" />
+    <Compile Include="Model\ci_history.cs" />
+    <Compile Include="Model\ci_links.cs" />
+    <Compile Include="Model\ci_relation.cs" />
+    <Compile Include="Model\ci_relation_type.cs" />
+    <Compile Include="Model\ci_sub_type.cs" />
+    <Compile Include="Model\ci_template.cs" />
+    <Compile Include="Model\ci_template_links.cs" />
+    <Compile Include="Model\ci_type.cs" />
+    <Compile Include="Model\command.cs" />
+    <Compile Include="Model\company.cs" />
+    <Compile Include="Model\company_files.cs" />
+    <Compile Include="Model\company_history.cs" />
+    <Compile Include="Model\company_links.cs" />
+    <Compile Include="Model\computer.cs" />
+    <Compile Include="Model\computer_attributes.cs" />
+    <Compile Include="Model\computer_attributes_history.cs" />
+    <Compile Include="Model\computer_changes.cs" />
+    <Compile Include="Model\computer_files.cs" />
+    <Compile Include="Model\computer_group.cs" />
+    <Compile Include="Model\computer_history.cs" />
+    <Compile Include="Model\computer_links.cs" />
+    <Compile Include="Model\computer_lists.cs" />
+    <Compile Include="Model\computer_log.cs" />
+    <Compile Include="Model\computer_patches.cs" />
+    <Compile Include="Model\computer_users.cs" />
+    <Compile Include="Model\comp_update_day_data.cs" />
+    <Compile Include="Model\comp_update_month_data.cs" />
+    <Compile Include="Model\comp_update_week_data.cs" />
+    <Compile Include="Model\comp_update_year_data.cs" />
+    <Compile Include="Model\current_measurement_lists.cs" />
+    <Compile Include="Model\current_sla_results.cs" />
+    <Compile Include="Model\customized_day_data.cs" />
+    <Compile Include="Model\customized_month_data.cs" />
+    <Compile Include="Model\customized_snmp_oids.cs" />
+    <Compile Include="Model\customized_week_data.cs" />
+    <Compile Include="Model\customized_year_data.cs" />
+    <Compile Include="Model\custom_columns.cs" />
+    <Compile Include="Model\custom_services.cs" />
+    <Compile Include="Model\custom_triggers.cs" />
+    <Compile Include="Model\cust_values.cs" />
+    <Compile Include="Model\discovery_service.cs" />
+    <Compile Include="Model\event.cs" />
+    <Compile Include="Model\faq.cs" />
+    <Compile Include="Model\faq_files.cs" />
+    <Compile Include="Model\form_history.cs" />
+    <Compile Include="Model\generic_messages.cs" />
+    <Compile Include="Model\gfi_products.cs" />
+    <Compile Include="Model\last_run_measurement_lists.cs" />
+    <Compile Include="Model\linked_service_req.cs" />
+    <Compile Include="Model\list_view.cs" />
+    <Compile Include="Model\mdm_actions.cs" />
+    <Compile Include="Model\mdm_policy.cs" />
+    <Compile Include="Model\mdm_wifi_policy.cs" />
+    <Compile Include="Model\measurements_def.cs" />
+    <Compile Include="Model\measurements_def_history.cs" />
+    <Compile Include="Model\measurements_lists.cs" />
+    <Compile Include="Model\measurements_lists_history.cs" />
+    <Compile Include="Model\message.cs" />
+    <Compile Include="Model\monitoring_conf.cs" />
+    <Compile Include="Model\monitor_embed_data.cs" />
+    <Compile Include="Model\monitor_events.cs" />
+    <Compile Include="Model\monitor_templates.cs" />
+    <Compile Include="Model\network_activity_day_data.cs" />
+    <Compile Include="Model\network_activity_month_data.cs" />
+    <Compile Include="Model\network_activity_week_data.cs" />
+    <Compile Include="Model\network_activity_year_data.cs" />
+    <Compile Include="Model\network_day_data.cs" />
+    <Compile Include="Model\network_month_data.cs" />
+    <Compile Include="Model\network_week_data.cs" />
+    <Compile Include="Model\network_year_data.cs" />
+    <Compile Include="Model\news.cs" />
+    <Compile Include="Model\online_assets.cs" />
+    <Compile Include="Model\online_users.cs" />
+    <Compile Include="Model\online_users_history.cs" />
+    <Compile Include="Model\patch.cs" />
+    <Compile Include="Model\patch_policy.cs" />
+    <Compile Include="Model\patch_policy_change.cs" />
+    <Compile Include="Model\patch_policy_event.cs" />
+    <Compile Include="Model\patch_policy_status.cs" />
+    <Compile Include="Model\performance_day_data.cs" />
+    <Compile Include="Model\performance_month_data.cs" />
+    <Compile Include="Model\performance_week_data.cs" />
+    <Compile Include="Model\performance_year_data.cs" />
+    <Compile Include="Model\policy_gfi_classification.cs" />
+    <Compile Include="Model\policy_gfi_products.cs" />
+    <Compile Include="Model\predefined_network_check.cs" />
+    <Compile Include="Model\predefined_services_check.cs" />
+    <Compile Include="Model\priority_matrix_cust_values.cs" />
+    <Compile Include="Model\problem_type.cs" />
+    <Compile Include="Model\processes_day_data.cs" />
+    <Compile Include="Model\processes_month_data.cs" />
+    <Compile Include="Model\processes_week_data.cs" />
+    <Compile Include="Model\processes_year_data.cs" />
+    <Compile Include="Model\project.cs" />
+    <Compile Include="Model\project_files.cs" />
+    <Compile Include="Model\project_history.cs" />
+    <Compile Include="Model\project_links.cs" />
+    <Compile Include="Model\project_log.cs" />
+    <Compile Include="Model\project_users.cs" />
+    <Compile Include="Model\QRTZ_BLOB_TRIGGERS.cs" />
+    <Compile Include="Model\QRTZ_CALENDARS.cs" />
+    <Compile Include="Model\QRTZ_CRON_TRIGGERS.cs" />
+    <Compile Include="Model\QRTZ_FIRED_TRIGGERS.cs" />
+    <Compile Include="Model\QRTZ_JOB_DETAILS.cs" />
+    <Compile Include="Model\QRTZ_JOB_LISTENERS.cs" />
+    <Compile Include="Model\QRTZ_LOCKS.cs" />
+    <Compile Include="Model\QRTZ_PAUSED_TRIGGER_GRPS.cs" />
+    <Compile Include="Model\QRTZ_SCHEDULER_STATE.cs" />
+    <Compile Include="Model\QRTZ_SIMPLE_TRIGGERS.cs" />
+    <Compile Include="Model\QRTZ_TRIGGERS.cs" />
+    <Compile Include="Model\QRTZ_TRIGGER_LISTENERS.cs" />
+    <Compile Include="Model\quick_list.cs" />
+    <Compile Include="Model\reminder.cs" />
+    <Compile Include="Model\remote_active_sessions.cs" />
+    <Compile Include="Model\rules_emails.cs" />
+    <Compile Include="Model\satisfaction_survey.cs" />
+    <Compile Include="Model\schedule_task.cs" />
+    <Compile Include="Model\services_day_data.cs" />
+    <Compile Include="Model\services_month_data.cs" />
+    <Compile Include="Model\services_week_data.cs" />
+    <Compile Include="Model\services_year_data.cs" />
+    <Compile Include="Model\service_req.cs" />
+    <Compile Include="Model\service_req_data.cs" />
+    <Compile Include="Model\service_req_files.cs" />
+    <Compile Include="Model\service_req_history.cs" />
+    <Compile Include="Model\service_req_links.cs" />
+    <Compile Include="Model\service_req_log.cs" />
+    <Compile Include="Model\service_req_msg.cs" />
+    <Compile Include="Model\share_and_compare.cs" />
+    <Compile Include="Model\software.cs" />
+    <Compile Include="Model\software2install_name.cs" />
+    <Compile Include="Model\software_files.cs" />
+    <Compile Include="Model\software_history.cs" />
+    <Compile Include="Model\software_links.cs" />
+    <Compile Include="Model\sort_cust_values.cs" />
+    <Compile Include="Model\sr_sub_tab.cs" />
+    <Compile Include="Model\sr_sub_tab_files.cs" />
+    <Compile Include="Model\sr_sub_tab_history.cs" />
+    <Compile Include="Model\sr_sub_tab_links.cs" />
+    <Compile Include="Model\sr_sub_tab_populate.cs" />
+    <Compile Include="Model\sr_sub_type.cs" />
+    <Compile Include="Model\sr_tab_dependences.cs" />
+    <Compile Include="Model\statistics_data.cs" />
+    <Compile Include="Model\status_settings.cs" />
+    <Compile Include="Model\sub_tab_views.cs" />
+    <Compile Include="Model\supplier.cs" />
+    <Compile Include="Model\supplier_files.cs" />
+    <Compile Include="Model\supplier_history.cs" />
+    <Compile Include="Model\supplier_links.cs" />
+    <Compile Include="Model\survey_answers.cs" />
+    <Compile Include="Model\survey_questions.cs" />
+    <Compile Include="Model\SysAidContext.cs" />
+    <Compile Include="Model\sysaid_events.cs" />
+    <Compile Include="Model\sysaid_item_links.cs" />
+    <Compile Include="Model\sysaid_user.cs" />
+    <Compile Include="Model\sysaid_user_files.cs" />
+    <Compile Include="Model\sysaid_user_history.cs" />
+    <Compile Include="Model\sysaid_user_links.cs" />
+    <Compile Include="Model\sysaid_user_permissions.cs" />
+    <Compile Include="Model\sysaid_user_push_enable.cs" />
+    <Compile Include="Model\sysaid_user_push_notifications.cs" />
+    <Compile Include="Model\sysaid_user_routing.cs" />
+    <Compile Include="Model\task.cs" />
+    <Compile Include="Model\task_activities.cs" />
+    <Compile Include="Model\task_files.cs" />
+    <Compile Include="Model\task_history.cs" />
+    <Compile Include="Model\task_links.cs" />
+    <Compile Include="Model\task_log.cs" />
+    <Compile Include="Model\task_users.cs" />
+    <Compile Include="Model\traps_data.cs" />
+    <Compile Include="Model\ui_menus.cs" />
+    <Compile Include="Model\ui_menus2group.cs" />
+    <Compile Include="Model\url_day_data.cs" />
+    <Compile Include="Model\url_embed_data.cs" />
+    <Compile Include="Model\url_month_data.cs" />
+    <Compile Include="Model\url_week_data.cs" />
+    <Compile Include="Model\url_year_data.cs" />
+    <Compile Include="Model\user2asset.cs" />
+    <Compile Include="Model\user2ci.cs" />
+    <Compile Include="Model\user2group.cs" />
+    <Compile Include="Model\users_remote_assets.cs" />
+    <Compile Include="Model\user_answer_attempts.cs" />
+    <Compile Include="Model\user_favorites.cs" />
+    <Compile Include="Model\user_groups.cs" />
+    <Compile Include="Model\user_questions.cs" />
+    <Compile Include="Model\uss_notif_events.cs" />
+    <Compile Include="Model\uss_security_questions.cs" />
+    <Compile Include="Model\version.cs" />
+    <Compile Include="Model\work_report.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IServiceDeskRepository.cs" />
+    <Compile Include="Repositories\ServiceDeskRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

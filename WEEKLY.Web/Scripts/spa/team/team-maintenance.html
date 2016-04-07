@@ -1,0 +1,103 @@
+﻿<div class="page-header">
+    <h1 class="title">Team Maintenance</h1>
+    <ol class="breadcrumb">
+        <li>
+            <a ng-href="/dashboard">Dashboard</a>
+        </li>
+        <li class="active">Team Maintenance</li>
+    </ol>
+    <div class="right">
+        <div class="btn-group" aria-label="..." role="group">
+            <a class="btn btn-light" ng-show="userHasAppPermission('CREATE_TEAM')" ng-href="/team/register/0">
+                <i class="fa fa-slideshare"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-padding">
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-title">
+                    Teams
+                    <span class="label label-danger">{{totalCount}}</span>
+                </div>
+                <div class="panel-body table-responsive">
+                    <div class="dataTables_wrapper">
+                        <div class="dataTables_length">
+                            <label>
+                                Show
+                                <select class="" name="page_size" ng-model="pageSize" ng-change="pageSizeChanged()">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                                entries
+                            </label>
+                        </div>
+                        <div class="dataTables_filter">
+                            <label>
+                                Search:
+                                <input class="" type="search" placeholder="" ng-model="fieldFilter" ng-keypress="filterTextChanged()">
+                            </label>
+                        </div>
+                        <table class="table display dataTable table-hover  table-striped">
+                            <thead>
+                                <tr>
+                                    <td width="5%">ID</td>
+                                    <td width="35%">Name</td>
+                                    <td width="20%">Code</td>
+                                    <td width="20%">Group</td>
+                                    <td width="10%">Status</td>
+                                    <td width="10%">Actions</td>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th rowspan="1" colspan="1">ID</th>
+                                    <th rowspan="1" colspan="1">Name</th>
+                                    <th rowspan="1" colspan="1">Code</th>
+                                    <th rowspan="1" colspan="1">Group</th>
+                                    <th rowspan="1" colspan="1">Status</th>
+                                    <th rowspan="1" colspan="1">Actions</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr ng-repeat="team in teams">
+                                    <td>{{team.TeamID}}</td>
+                                    <td>{{team.Name}}</td>
+                                    <td>{{team.Code}}</td>
+                                    <td>{{team.Group.Name}}</td>
+
+                                    <td ng-class="{'danger': team.Status.Name == 'InActive', 'success': team.Status.Name == 'Active'}">{{team.Status.Name}}</td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm" ng-click="editTeam(team.TeamID)" ng-show="userHasTeamPermission(team.TeamID, 'UPDATE_TEAM')">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-default btn-sm" ng-click="viewTeam(team.TeamID)" ng-show="userHasTeamPermission(team.TeamID, 'READ_TEAM')">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="dataTables_info" role="status" aria-live="polite">Showing {{rangeStart}} to {{rangeEnd}} of {{totalCount}} entries</div>
+                        
+                        <div class="dataTables_paginate paging_simple_numbers">
+                            <a ng-class="{'paginate_button': true, 'previous': true, 'disabled': page == 0}" aria-controls="example0" data-dt-idx="0" tabindex="0" ng-click="previous()">Previous</a>
+                            <span>
+                                <a ng-repeat="n in range()" ng-class="{'paginate_button' : true, 'current' : n == page}" data-dt-idx="{{n+1}}" ng-click="search(n)">{{n+1}}</a>
+                            </span>
+                            <a ng-class="{'paginate_button': true, 'next': true, 'disabled': page == pagesCount - 1}" aria-controls="example0" data-dt-idx="5" tabindex="0" ng-click="next()">Next</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
